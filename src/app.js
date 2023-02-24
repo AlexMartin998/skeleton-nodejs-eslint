@@ -1,9 +1,7 @@
-'use strict';
-
 import express from 'express';
 
-import './db/db';
-import { setupMiddlewares } from './middlewares/setup.middleware';
+import './db/db.js';
+import { notFoundMiddleware, setupMiddlewares } from './middlewares/index.js';
 
 // Initializations:
 const app = express();
@@ -12,8 +10,10 @@ const app = express();
 setupMiddlewares(app);
 
 // Routes
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.status(200).json({ msg: 'GET' });
 });
+
+app.use(notFoundMiddleware);
 
 export default app;
